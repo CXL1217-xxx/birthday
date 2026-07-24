@@ -244,20 +244,11 @@ html.dark .data-btns button { background: #2c2c2e; color: #8e8e93; }
 
 <script>
 // ============================================================
-// PWA - 让网页变成 App
+// PWA - Service Worker 注册
 // ============================================================
-(function(){
-  // Service Worker (离线缓存 + 安装支持)
-  if('serviceWorker' in navigator){
-    const swCode=`
-      const CACHE='bd-v2';
-      self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(['.','manifest.json'])))}) ;
-      self.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request)))}) ;
-    `;
-    const swBlob=new Blob([swCode],{type:'application/javascript'});
-    navigator.serviceWorker.register(URL.createObjectURL(swBlob)).catch(()=>{});
-  }
-})();
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('sw.js').catch(()=>{});
+}
 
 // ============================================================
 // SUPABASE CONFIG
